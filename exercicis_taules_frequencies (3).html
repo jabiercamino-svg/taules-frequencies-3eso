@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicis de Taules de Freqüències</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .exercici {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .exercici:nth-child(even) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .exercici:nth-child(3n) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .exercici:nth-child(4n) {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .exercici:nth-child(5n) {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .context {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.1em;
+            border-left: 5px solid rgba(0,0,0,0.2);
+        }
+        
+        .dades {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .preguntes {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+        }
+        
+        .preguntes h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .preguntes ol {
+            margin-left: 25px;
+        }
+        
+        .preguntes li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        
+        .chart {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            border-left: 3px solid #333;
+            border-bottom: 3px solid #333;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .bar:hover {
+            opacity: 0.8;
+        }
+        
+        .bar-label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .y-axis {
+            position: absolute;
+            left: -30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .formula {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+            font-weight: bold;
+        }
+        
+        .nota {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #0c5460;
+            font-style: italic;
+        }
+        
+        .exemple {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .exemple h2 {
+            color: #2d3436;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .exemple .context {
+            background: rgba(255,255,255,0.9);
+            border-left: 5px solid #fdcb6e;
+        }
+        
+        .math-formula {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .math-formula .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        .math-formula .numerator {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .math-formula .denominator {
+            padding-top: 5px;
+        }
+        
+        .sub {
+            font-size: 0.7em;
+            vertical-align: sub;
+        }
+        
+        .step-title {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 15px 0 10px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .calculation {
+            background: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Exercicis de Taules de Freqüències 📊</h1>
+        
+        <!-- EXEMPLE INICIAL -->
+        <div class="exemple">
+            <h2>📚 Exemple inicial: Com fer un recompte i omplir una taula de freqüències</h2>
+            
+            <div class="context">
+                <strong>Situació:</strong> En una classe es pregunta als 20 alumnes quants germans tenen. Les respostes són:
+            </div>
+            
+            <div class="dades">
+                1, 2, 0, 1, 3, 1, 2, 0, 1, 2, 1, 0, 2, 1, 3, 2, 1, 1, 2, 1
+            </div>
+            
+            <div class="step-title">📝 PAS 1: FER EL RECOMPTE</div>
+            
+            <div class="context">
+                Comptem quantes vegades apareix cada valor:
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>0 germans:</strong> 0, 0, 0 → apareix <strong>3 vegades</strong></li>
+                    <li><strong>1 germà:</strong> 1, 1, 1, 1, 1, 1, 1, 1, 1 → apareix <strong>9 vegades</strong></li>
+                    <li><strong>2 germans:</strong> 2, 2, 2, 2, 2, 2 → apareix <strong>6 vegades</strong></li>
+                    <li><strong>3 germans:</strong> 3, 3 → apareix <strong>2 vegades</strong></li>
+                </ul>
+            </div>
+            
+            <div class="step-title">📋 PAS 2: CONCEPTES I FÓRMULES</div>
+            
+            <div class="context">
+                <strong>Què és cada columna?</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Freqüència absoluta (f<sub>i</sub>):</strong> Quantes vegades apareix cada valor</li>
+                    <li><strong>Freqüència absoluta acumulada (F<sub>i</sub>):</strong> Suma de totes les freqüències absolutes fins aquella fila</li>
+                    <li><strong>Freqüència relativa (h<sub>i</sub>):</strong> Proporció que representa cada valor del total</li>
+                    <li><strong>Freqüència relativa acumulada (H<sub>i</sub>):</strong> Suma de totes les freqüències relatives fins aquella fila</li>
+                    <li><strong>Percentatge (%):</strong> Freqüència relativa expressada en percentatge</li>
+                    <li><strong>Percentatge acumulat (% ac.):</strong> Suma de tots els percentatges fins aquella fila</li>
+                </ul>
+            </div>
+            
+            <div class="formula">
+                <strong>Fórmules principals:</strong>
+            </div>
+            
+            <div class="math-formula">
+                N = f<span class="sub">1</span> + f<span class="sub">2</span> + f<span class="sub">3</span> + ...
+            </div>
+            
+            <div class="context" style="text-align: center; margin: 10px 0;">
+                (N és el nombre total de dades)
+            </div>
+            
+            <div class="math-formula">
+                h<span class="sub">i</span> = <div class="fraction"><div class="numerator">f<span class="sub">i</span></div><div class="denominator">N</div></div>
+            </div>
+            
+            <div class="math-formula">
+                % = h<span class="sub">i</span> × 100
+            </div>
+            
+            <div class="step-title">📊 PAS 3: TAULA BUIDA A OMPLIR</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de germans</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="step-title">🔢 PAS 4: CÀLCULS</div>
+            
+            <div class="context">
+                <strong>Primer, calculem N:</strong>
+            </div>
+            
+            <div class="calculation">
+                N = 3 + 9 + 6 + 2 = <strong>20 alumnes</strong>
+            </div>
+            
+            <div class="context">
+                <strong>Ara calculem les freqüències relatives (h<sub>i</sub>):</strong>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> (0 germans) = <sup>3</sup>⁄<sub>20</sub> = <strong>0,15</strong>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> (1 germà) = <sup>9</sup>⁄<sub>20</sub> = <strong>0,45</strong>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> (2 germans) = <sup>6</sup>⁄<sub>20</sub> = <strong>0,30</strong>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> (3 germans) = <sup>2</sup>⁄<sub>20</sub> = <strong>0,10</strong>
+            </div>
+            
+            <div class="context">
+                <strong>Calculem els percentatges:</strong>
+            </div>
+            
+            <div class="calculation">
+                % (0 germans) = 0,15 × 100 = <strong>15%</strong>
+            </div>
+            
+            <div class="calculation">
+                % (1 germà) = 0,45 × 100 = <strong>45%</strong>
+            </div>
+            
+            <div class="calculation">
+                % (2 germans) = 0,30 × 100 = <strong>30%</strong>
+            </div>
+            
+            <div class="calculation">
+                % (3 germans) = 0,10 × 100 = <strong>10%</strong>
+            </div>
+            
+            <div class="context">
+                <strong>Les freqüències acumulades es van sumant:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>F<sub>i</sub> (0) = 3</li>
+                    <li>F<sub>i</sub> (1) = 3 + 9 = 12</li>
+                    <li>F<sub>i</sub> (2) = 3 + 9 + 6 = 18</li>
+                    <li>F<sub>i</sub> (3) = 3 + 9 + 6 + 2 = 20</li>
+                </ul>
+            </div>
+            
+            <div class="step-title">✅ PAS 5: TAULA COMPLETA</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de germans</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td style="background: #FFE4B5;">3</td>
+                        <td style="background: #FFE4B5;">3</td>
+                        <td style="background: #FFE4B5;">0,15</td>
+                        <td style="background: #FFE4B5;">0,15</td>
+                        <td style="background: #FFE4B5;">15%</td>
+                        <td style="background: #FFE4B5;">15%</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td style="background: #ADD8E6;">9</td>
+                        <td style="background: #ADD8E6;">12</td>
+                        <td style="background: #ADD8E6;">0,45</td>
+                        <td style="background: #ADD8E6;">0,60</td>
+                        <td style="background: #ADD8E6;">45%</td>
+                        <td style="background: #ADD8E6;">60%</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td style="background: #90EE90;">6</td>
+                        <td style="background: #90EE90;">18</td>
+                        <td style="background: #90EE90;">0,30</td>
+                        <td style="background: #90EE90;">0,90</td>
+                        <td style="background: #90EE90;">30%</td>
+                        <td style="background: #90EE90;">90%</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td style="background: #FFB6C1;">2</td>
+                        <td style="background: #FFB6C1;">20</td>
+                        <td style="background: #FFB6C1;">0,10</td>
+                        <td style="background: #FFB6C1;">1,00</td>
+                        <td style="background: #FFB6C1;">10%</td>
+                        <td style="background: #FFB6C1;">100%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="context" style="margin-top: 20px;">
+                <strong>✅ Comprovació final:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Suma de f<sub>i</sub>: 3 + 9 + 6 + 2 = <strong>20 ✓</strong> (igual a N)</li>
+                    <li>Suma de h<sub>i</sub>: 0,15 + 0,45 + 0,30 + 0,10 = <strong>1,00 ✓</strong></li>
+                    <li>Suma de %: 15% + 45% + 30% + 10% = <strong>100% ✓</strong></li>
+                    <li>Última F<sub>i</sub> = <strong>20 ✓</strong> (igual a N)</li>
+                    <li>Última H<sub>i</sub> = <strong>1,00 ✓</strong></li>
+                    <li>Últim % ac. = <strong>100% ✓</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 1 -->
+        <div class="exercici">
+            <h2>Exercici 1</h2>
+            <div class="context">
+                En una biblioteca, es pregunta als usuaris quants llibres han llegit durant el mes passat. Es recullen aquestes dades de 30 persones:
+            </div>
+            <div class="dades">
+                2, 1, 3, 0, 2, 4, 1, 2, 3, 1, 0, 2, 5, 1, 2, 3, 2, 1, 4, 2, 0, 3, 2, 1, 3, 2, 4, 1, 2, 3
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de llibres</th>
+                        <th>Freqüència absoluta</th>
+                        <th>Freqüència absoluta acumulada</th>
+                        <th>Freqüència relativa</th>
+                        <th>Freqüència relativa acumulada</th>
+                        <th>Percentatge</th>
+                        <th>Percentatge acumulat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quantes persones han llegit 3 o més llibres?</li>
+                    <li>Quin percentatge de persones ha llegit com a màxim 2 llibres?</li>
+                    <li>Quin és el nombre de llibres més freqüent?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 2 -->
+        <div class="exercici">
+            <h2>Exercici 2</h2>
+            <div class="context">
+                En un centre esportiu es pregunta als socis quants dies per setmana fan exercici. Els resultats es mostren en el següent diagrama de barres:
+            </div>
+            
+            <div class="chart">
+                <div class="bar-chart">
+                    <div class="y-axis">
+                        <span>15</span>
+                        <span>12</span>
+                        <span>9</span>
+                        <span>6</span>
+                        <span>3</span>
+                        <span>0</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 120px;">
+                            <div class="bar-value">6</div>
+                        </div>
+                        <div class="bar-label">1 dia</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 200px;">
+                            <div class="bar-value">10</div>
+                        </div>
+                        <div class="bar-label">2 dies</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 280px;">
+                            <div class="bar-value">14</div>
+                        </div>
+                        <div class="bar-label">3 dies</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 160px;">
+                            <div class="bar-value">8</div>
+                        </div>
+                        <div class="bar-label">4 dies</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 240px;">
+                            <div class="bar-value">12</div>
+                        </div>
+                        <div class="bar-label">5 dies</div>
+                    </div>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dies per setmana</th>
+                        <th>Freqüència absoluta</th>
+                        <th>Freqüència absoluta acumulada</th>
+                        <th>Freqüència relativa</th>
+                        <th>Freqüència relativa acumulada</th>
+                        <th>Percentatge</th>
+                        <th>Percentatge acumulat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants socis fan exercici 3 o més dies per setmana?</li>
+                    <li>Quin percentatge de socis fa exercici menys de 3 dies per setmana?</li>
+                    <li>Quina és la freqüència més comuna?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 3 -->
+        <div class="exercici">
+            <h2>Exercici 3</h2>
+            <div class="context">
+                En un museu d'art modern, es pregunta l'edat a tots els visitants al llarg d'un dia. Els resultats es mostren en el següent histograma:
+            </div>
+            
+            <div class="chart">
+                <div class="bar-chart">
+                    <div class="y-axis">
+                        <span>50</span>
+                        <span>40</span>
+                        <span>30</span>
+                        <span>20</span>
+                        <span>10</span>
+                        <span>0</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 72px;">
+                            <div class="bar-value">12</div>
+                        </div>
+                        <div class="bar-label">[0, 9)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 108px;">
+                            <div class="bar-value">18</div>
+                        </div>
+                        <div class="bar-label">[9, 18)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 162px;">
+                            <div class="bar-value">27</div>
+                        </div>
+                        <div class="bar-label">[18, 27)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 240px;">
+                            <div class="bar-value">40</div>
+                        </div>
+                        <div class="bar-label">[27, 36)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 186px;">
+                            <div class="bar-value">31</div>
+                        </div>
+                        <div class="bar-label">[36, 45)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 216px;">
+                            <div class="bar-value">36</div>
+                        </div>
+                        <div class="bar-label">[45, 54)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 126px;">
+                            <div class="bar-value">21</div>
+                        </div>
+                        <div class="bar-label">[54, 63)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>x<sub>i</sub></th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[0, 9)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[9, 18)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[18, 27)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[27, 36)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[36, 45)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[45, 54)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[54, 63)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quin percentatge de visitants són menors d'edat (menors de 18 anys)?</li>
+                    <li>Quina és la franja d'edat que més visita el museu?</li>
+                    <li>Quants visitants tenen 36 anys o més?</li>
+                    <li>Quin percentatge de visitants tenen entre 18 i 45 anys?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 4 -->
+        <div class="exercici">
+            <h2>Exercici 4</h2>
+            <div class="context">
+                En una enquesta sobre mascotes, es pregunta a 28 estudiants quantes mascotes tenen a casa. Les respostes són:
+            </div>
+            <div class="dades">
+                1, 0, 2, 1, 3, 0, 1, 2, 1, 0, 2, 1, 4, 1, 2, 0, 1, 3, 2, 1, 0, 2, 1, 2, 3, 1, 1, 2
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de mascotes</th>
+                        <th>Freqüència absoluta</th>
+                        <th>Freqüència absoluta acumulada</th>
+                        <th>Freqüència relativa</th>
+                        <th>Freqüència relativa acumulada</th>
+                        <th>Percentatge</th>
+                        <th>Percentatge acumulat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants estudiants tenen almenys 2 mascotes?</li>
+                    <li>Quin percentatge d'estudiants no tenen cap mascota?</li>
+                    <li>Quin és el nombre més comú de mascotes?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 5 -->
+        <div class="exercici">
+            <h2>Exercici 5</h2>
+            <div class="context">
+                En una competició de salts de llargada, es mesura la distància assolida per 25 atletes (en centímetres). Les dades obtingudes són:
+            </div>
+            <div class="dades">
+                420, 385, 455, 410, 392, 448, 425, 405, 438, 415, 390, 445, 418, 432, 408, 395, 442, 428, 412, 435, 422, 450, 398, 440, 430
+            </div>
+            
+            <div class="formula">
+                📐 <strong>Fórmula de l'amplitud:</strong>
+            </div>
+            
+            <div class="math-formula">
+                Amplitud = <div class="fraction"><div class="numerator">Dada màxima − Dada mínima</div><div class="denominator">Nombre de classes</div></div>
+            </div>
+            
+            <div class="nota">
+                ⚠️ <strong>Nota important:</strong> Si l'amplitud et surt amb decimals, arrodoneix sempre cap amunt. Per exemple, si et surt 8,7 → amplitud = 9.
+            </div>
+            
+            <div class="nota">
+                📋 <strong>Instruccions:</strong> Agrupa aquestes dades en <strong>5 classes (intervals)</strong>. Calcula primer l'amplitud i després crea els intervals començant pel valor mínim.
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>x<sub>i</sub></th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants atletes han saltat menys de 410 cm?</li>
+                    <li>Quin percentatge d'atletes ha saltat 420 cm o més?</li>
+                    <li>En quin interval hi ha més atletes?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 6 -->
+        <div class="exercici">
+            <h2>Exercici 6</h2>
+            <div class="context">
+                En un control mèdic escolar, es mesura l'alçada de 35 alumnes (en centímetres). Les dades es recullen i s'agrupen en la següent taula segons els intervals indicats:
+            </div>
+            <div class="dades">
+                152, 165, 158, 172, 168, 155, 178, 162, 170, 156, 175, 164, 169, 157, 173, 160, 176, 163, 171, 159, 174, 161, 167, 154, 177, 166, 153, 179, 168, 172, 165, 158, 170, 162, 175
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alçada (cm)</th>
+                        <th>Marca de classe</th>
+                        <th>Freqüència absoluta</th>
+                        <th>Freqüència absoluta acumulada</th>
+                        <th>Freqüència relativa</th>
+                        <th>Freqüència relativa acumulada</th>
+                        <th>Percentatge</th>
+                        <th>Percentatge acumulat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[150, 155)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[155, 160)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[160, 165)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[165, 170)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[170, 175)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[175, 180)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants alumnes mesuren menys de 165 cm?</li>
+                    <li>Quin percentatge d'alumnes mesura entre 165 i 175 cm?</li>
+                    <li>Quin és l'interval d'alçada més freqüent?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 7 -->
+        <div class="exercici">
+            <h2>Exercici 7</h2>
+            <div class="context">
+                En una botiga d'electrònica, es registra el preu de 30 ordinadors portàtils venuts durant el mes (en euros). Les dades es classifiquen segons els intervals següents:
+            </div>
+            <div class="dades">
+                485, 520, 565, 495, 610, 540, 590, 510, 625, 555, 500, 630, 575, 505, 595, 525, 615, 545, 580, 515, 620, 560, 530, 600, 550, 605, 535, 585, 570, 640
+            </div>
+            
+            <div class="formula">
+                📐 <strong>Fórmula de l'amplitud:</strong>
+            </div>
+            
+            <div class="math-formula">
+                Amplitud = <div class="fraction"><div class="numerator">Dada màxima − Dada mínima</div><div class="denominator">Nombre de classes</div></div>
+            </div>
+            
+            <div class="nota">
+                ⚠️ <strong>Important:</strong> Arrodoneix sempre cap amunt si l'amplitud té decimals.
+                <br><br>
+                💡 <strong>Exemple:</strong> Si les dades van de 100 a 150 i vols 5 classes:
+            </div>
+            
+            <div class="math-formula" style="font-size: 1.1em;">
+                Amplitud = <div class="fraction"><div class="numerator">150 − 100</div><div class="denominator">5</div></div> = <div class="fraction"><div class="numerator">50</div><div class="denominator">5</div></div> = 10
+            </div>
+            
+            <div class="nota">
+                Els intervals serien: [100, 110), [110, 120), [120, 130), [130, 140), [140, 150]
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>x<sub>i</sub></th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[480, 510)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[510, 540)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[540, 570)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[570, 600)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[600, 630)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>[630, 660)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants ordinadors costen menys de 540 euros?</li>
+                    <li>Quin percentatge d'ordinadors tenen un preu entre 570 i 630 euros?</li>
+                    <li>En quin interval de preus hi ha més ordinadors?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 8 -->
+        <div class="exercici">
+            <h2>Exercici 8</h2>
+            <div class="context">
+                En una cursa popular de 10 km, es registra el temps que han trigat 32 corredors a completar-la (en minuts). Els temps obtinguts són:
+            </div>
+            <div class="dades">
+                42, 55, 68, 48, 73, 51, 65, 45, 70, 58, 47, 75, 62, 50, 72, 56, 67, 52, 74, 60, 49, 71, 63, 54, 69, 57, 46, 76, 64, 53, 66, 59
+            </div>
+            
+            <div class="formula">
+                📐 <strong>Fórmula de l'amplitud:</strong>
+            </div>
+            
+            <div class="math-formula">
+                Amplitud = <div class="fraction"><div class="numerator">Dada màxima − Dada mínima</div><div class="denominator">Nombre de classes</div></div>
+            </div>
+            
+            <div class="nota">
+                ⚠️ <strong>Important:</strong> Arrodoneix sempre cap amunt si l'amplitud té decimals.
+                <br><br>
+                💡 <strong>Exemple:</strong> Si l'amplitud et surt 6,8 → utilitza amplitud = 7
+            </div>
+            
+            <div class="nota">
+                📋 <strong>Instruccions:</strong> Agrupa aquestes dades en <strong>6 classes (intervals)</strong>. Calcula primer l'amplitud i després crea els intervals començant pel valor mínim.
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>x<sub>i</sub></th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quants corredors han trigat menys de 55 minuts?</li>
+                    <li>Quin percentatge de corredors ha completat la cursa en més de 65 minuts?</li>
+                    <li>En quin interval de temps hi ha més corredors?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXEMPLE EXPLICATIU -->
+        <div class="exemple">
+            <h2>💡 Exemple: Com completar una taula incompleta</h2>
+            <div class="context">
+                <strong>Conceptes clau per completar taules:</strong>
+                <br><br>
+                <strong>1. Relació entre freqüències:</strong>
+            </div>
+            
+            <div class="math-formula">
+                h<span class="sub">i</span> = <div class="fraction"><div class="numerator">f<span class="sub">i</span></div><div class="denominator">N</div></div>
+            </div>
+            
+            <div class="math-formula">
+                % = h<span class="sub">i</span> × 100
+            </div>
+            
+            <div class="context">
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>F<sub>i</sub></strong> = suma de totes les f<sub>i</sub> fins aquella fila (freqüència absoluta acumulada)</li>
+                    <li><strong>H<sub>i</sub></strong> = suma de totes les h<sub>i</sub> fins aquella fila (freqüència relativa acumulada)</li>
+                    <li><strong>% ac.</strong> = suma de tots els % fins aquella fila (percentatge acumulat)</li>
+                </ul>
+                <br>
+                <strong>2. Estratègia per resoldre:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Si coneixes <strong>N</strong> i tens <strong>h<sub>i</sub></strong> → pots trobar <strong>f<sub>i</sub></strong> amb la fórmula: <strong>f<sub>i</sub> = h<sub>i</sub> × N</strong></li>
+                    <li>Si tens <strong>f<sub>i</sub></strong> i <strong>N</strong> → pots trobar <strong>h<sub>i</sub></strong> amb la fórmula: <strong>h<sub>i</sub> = f<sub>i</sub> / N</strong></li>
+                    <li>La suma de tots els <strong>f<sub>i</sub></strong> ha de ser igual a <strong>N</strong></li>
+                    <li>La suma de tots els <strong>h<sub>i</sub></strong> ha de ser igual a <strong>1</strong></li>
+                    <li>La suma de tots els <strong>%</strong> ha de ser igual a <strong>100%</strong></li>
+                </ul>
+            </div>
+            
+            <div class="step-title">📋 EXEMPLE PRÀCTIC PAS A PAS:</div>
+            
+            <div class="context">
+                Imaginem que tenim aquesta taula incompleta amb <strong>N = 50</strong> persones enquestades:
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Color preferit</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vermell</td>
+                        <td></td>
+                        <td></td>
+                        <td>0,20</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Blau</td>
+                        <td>15</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Verd</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="step-title">📝 PAS 1: Calculem f<sub>i</sub> del Vermell</div>
+            
+            <div class="context">
+                <strong>Fixeu-vos que tenim:</strong> h<sub>i</sub> = 0,20 i N = 50
+                <br><br>
+                Utilitzem la fórmula:
+            </div>
+            
+            <div class="math-formula">
+                f<span class="sub">i</span> = h<span class="sub">i</span> × N
+            </div>
+            
+            <div class="calculation">
+                f<sub>i</sub> = 0,20 × 50 = <strong>10</strong>
+            </div>
+            
+            <div class="context">
+                Ara podem omplir aquesta dada a la taula:
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Color preferit</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vermell</td>
+                        <td style="background: #90EE90; font-weight: bold;">10</td>
+                        <td></td>
+                        <td>0,20</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Blau</td>
+                        <td>15</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Verd</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="step-title">📝 PAS 2: Calculem h<sub>i</sub> i % del Blau</div>
+            
+            <div class="context">
+                <strong>Tenim:</strong> f<sub>i</sub> = 15 i N = 50
+                <br><br>
+                Utilitzem les fórmules:
+            </div>
+            
+            <div class="math-formula">
+                h<span class="sub">i</span> = <div class="fraction"><div class="numerator">f<span class="sub">i</span></div><div class="denominator">N</div></div>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> = <sup>15</sup>⁄<sub>50</sub> = <strong>0,30</strong>
+            </div>
+            
+            <div class="math-formula">
+                % = h<span class="sub">i</span> × 100
+            </div>
+            
+            <div class="calculation">
+                % = 0,30 × 100 = <strong>30%</strong>
+            </div>
+            
+            <div class="context">
+                Actualitzem la taula:
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Color preferit</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vermell</td>
+                        <td>10</td>
+                        <td></td>
+                        <td>0,20</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Blau</td>
+                        <td>15</td>
+                        <td></td>
+                        <td style="background: #90EE90; font-weight: bold;">0,30</td>
+                        <td></td>
+                        <td style="background: #90EE90; font-weight: bold;">30%</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Verd</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="step-title">📝 PAS 3: Calculem les dades del Verd</div>
+            
+            <div class="context">
+                <strong>Sabem que:</strong> La suma de tots els f<sub>i</sub> ha de ser N = 50
+                <br><br>
+                Per tant:
+            </div>
+            
+            <div class="calculation">
+                f<sub>i</sub> (Verd) = 50 − 10 − 15 = <strong>25</strong>
+            </div>
+            
+            <div class="calculation">
+                h<sub>i</sub> (Verd) = <sup>25</sup>⁄<sub>50</sub> = <strong>0,50</strong>
+            </div>
+            
+            <div class="calculation">
+                % (Verd) = 0,50 × 100 = <strong>50%</strong>
+            </div>
+            
+            <div class="step-title">✅ TAULA COMPLETA:</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Color preferit</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vermell</td>
+                        <td style="background: #FFE4B5;">10</td>
+                        <td style="background: #FFE4B5;">10</td>
+                        <td style="background: #FFE4B5;">0,20</td>
+                        <td style="background: #FFE4B5;">0,20</td>
+                        <td style="background: #FFE4B5;">20%</td>
+                        <td style="background: #FFE4B5;">20%</td>
+                    </tr>
+                    <tr>
+                        <td>Blau</td>
+                        <td style="background: #ADD8E6;">15</td>
+                        <td style="background: #ADD8E6;">25</td>
+                        <td style="background: #ADD8E6;">0,30</td>
+                        <td style="background: #ADD8E6;">0,50</td>
+                        <td style="background: #ADD8E6;">30%</td>
+                        <td style="background: #ADD8E6;">50%</td>
+                    </tr>
+                    <tr>
+                        <td>Verd</td>
+                        <td style="background: #90EE90;">25</td>
+                        <td style="background: #90EE90;">50</td>
+                        <td style="background: #90EE90;">0,50</td>
+                        <td style="background: #90EE90;">1,00</td>
+                        <td style="background: #90EE90;">50%</td>
+                        <td style="background: #90EE90;">100%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="context" style="margin-top: 20px;">
+                <strong>✅ Comprovació:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Suma de f<sub>i</sub>: 10 + 15 + 25 = <strong>50 ✓</strong></li>
+                    <li>Suma de h<sub>i</sub>: 0,20 + 0,30 + 0,50 = <strong>1,00 ✓</strong></li>
+                    <li>Suma de %: 20% + 30% + 50% = <strong>100% ✓</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 9 -->
+        <div class="exercici">
+            <h2>Exercici 9</h2>
+            <div class="context">
+                En una enquesta sobre esports favorits realitzada a 60 estudiants, s'obtenen les següents dades. Completa la taula:
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Esport</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Futbol</td>
+                        <td>18</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Bàsquet</td>
+                        <td></td>
+                        <td></td>
+                        <td>0,25</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tennis</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>15%</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Natació</td>
+                        <td>12</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Atletisme</td>
+                        <td></td>
+                        <td>60</td>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quin és l'esport més popular entre els estudiants?</li>
+                    <li>Quants estudiants prefereixen bàsquet o tennis?</li>
+                    <li>Quin percentatge d'estudiants prefereixen futbol o natació?</li>
+                    <li>Quants estudiants prefereixen esports individuals (tennis, natació, atletisme)?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- EXERCICI 10 -->
+        <div class="exercici">
+            <h2>Exercici 10</h2>
+            <div class="context">
+                En una fira del llibre, es pregunta als visitants quin és el seu gènere literari preferit. S'enquesten 80 persones i s'obtenen aquests resultats parcials. Completa la taula:
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gènere literari</th>
+                        <th>f<sub>i</sub></th>
+                        <th>F<sub>i</sub></th>
+                        <th>h<sub>i</sub></th>
+                        <th>H<sub>i</sub></th>
+                        <th>%</th>
+                        <th>% ac.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Novel·la</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>35%</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Ciència-ficció</td>
+                        <td>16</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Thriller</td>
+                        <td></td>
+                        <td></td>
+                        <td>0,15</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Poesia</td>
+                        <td></td>
+                        <td>68</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Assaig</td>
+                        <td>12</td>
+                        <td></td>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="preguntes">
+                <h3>Preguntes:</h3>
+                <ol>
+                    <li>Quin és el gènere literari més popular?</li>
+                    <li>Quantes persones prefereixen thriller o poesia?</li>
+                    <li>Quin percentatge de visitants prefereixen gèneres de ficció (novel·la, ciència-ficció, thriller)?</li>
+                    <li>Quantes persones més prefereixen novel·la que assaig?</li>
+                </ol>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
